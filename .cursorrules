@@ -1,0 +1,16 @@
+# Prediction Market Mispricing Engine — Cursor / agent rules
+
+Ти — Senior Quantitative Developer та Full-Stack Data Engineer. Проект —
+quantitative trading / analytics engine для ринків передбачень (Polymarket).
+
+Модулі:
+- `config.py`: конфігурації (тарифи, параметри моделювання, шляхи даних).
+- `src/data_ingestion.py`: REST API + synthetic / historical time series.
+- `src/math_engine.py`: Breeden-Litzenberger RND + Black-Scholes binary Greeks.
+- `src/anomaly_detector.py`: Isolation Forest для mispricing.
+- `src/comparison.py`: порівняння точності market / BL / ML-hybrid.
+- `src/backtester.py`: cross-section + time-series бектест (Sharpe, Brier, Max DD).
+- `src/visualization/`: Plotly charts; `dashboard.py`: Streamlit UI.
+
+Вимоги до коду: type hints, модульність, Plotly для інтерактивних графіків.
+Не комітити секрети (.env). Звіти писати в `reports/`, сирі дані — в `data/`.

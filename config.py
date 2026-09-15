@@ -5,6 +5,7 @@ Defines environment settings, API endpoints, mathematical constants, and ML para
 
 import os
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass(frozen=True)
@@ -16,8 +17,9 @@ class SystemConfig:
 
     # Mathematical & Quantitative Constants
     RISK_FREE_RATE: float = 0.05  # 5% annual risk-free rate (r)
-    DEFAULT_TENOR: float = 0.25   # Time to expiration in years (T)
-    MIN_STRIKES_COUNT: int = 3    # Minimum points required for spline fitting
+    DEFAULT_TENOR: float = 0.25  # Time to expiration in years (T)
+    DEFAULT_VOLATILITY: float = 0.20  # Implied vol for binary BS pricing
+    MIN_STRIKES_COUNT: int = 3  # Minimum points required for spline fitting
 
     # Market Filtering Constraints
     MIN_LIQUIDITY_USD: float = 500.0
@@ -27,8 +29,30 @@ class SystemConfig:
     ANOMALY_CONTAMINATION: float = 0.05  # Expected percentage of anomalies
     RANDOM_STATE: int = 42
 
+    # Persistence
+    DATA_DIR: str = os.getenv("DATA_DIR", "data")
+    RAW_DATA_DIR: str = os.path.join(DATA_DIR, "raw")
+    PROCESSED_DATA_DIR: str = os.path.join(DATA_DIR, "processed")
+    REPORTS_DIR: str = os.getenv("REPORTS_DIR", "reports")
+
+    # Backtest defaults
+    INITIAL_CAPITAL: float = 10_000.0
+    EXECUTION_FEE: float = 0.002
+    ANOMALY_SCORE_THRESHOLD: float = 0.65
+
     # System Logging
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
 
 config = SystemConfig()
+
+
+def ensure_data_dirs() -> None:
+    """Create local data / report directories if missing."""
+    for path in (
+        config.RAW_DATA_DIR,
+        config.PROCESSED_DATA_DIR,
+        os.path.join(config.REPORTS_DIR, "charts"),
+        os.path.join(config.REPORTS_DIR, "metrics"),
+    ):
+        Path(path).mkdir(parents=True, exist_ok=True)

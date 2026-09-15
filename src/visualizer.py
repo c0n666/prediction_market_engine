@@ -88,7 +88,7 @@ class QuantVisualizer:
         ax.plot(indices, df["price_yes"], color='#38bdf8', marker='o', markersize=4, linestyle='-', linewidth=1.2, label='Market Price', alpha=0.8)
         ax.plot(indices, df["fair_price"], color='#00ffaa', marker='s', markersize=4, linestyle='--', linewidth=1.2, label='BS Fair Model Price', alpha=0.8)
 
-        anomalies = df[df.get("is_anomaly", False)]
+        anomalies = df[df["is_anomaly"] == True] if "is_anomaly" in df.columns else pd.DataFrame()
         if not anomalies.empty:
             ax.scatter(anomalies.index.values, anomalies["price_yes"], color='#ff0055', s=90, zorder=5, label='ML Isolation Forest Anomaly', edgecolor='#ffffff')
 
