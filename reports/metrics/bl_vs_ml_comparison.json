@@ -1,0 +1,27 @@
+{
+  "best_model": "market",
+  "metrics": [
+    {
+      "model": "market",
+      "brier_score": 0.2356,
+      "log_loss": 0.6646,
+      "mae": 0.4598,
+      "n_samples": 50
+    },
+    {
+      "model": "ml_hybrid",
+      "brier_score": 0.2401,
+      "log_loss": 0.6774,
+      "mae": 0.4567,
+      "n_samples": 50
+    },
+    {
+      "model": "breeden_litzenberger",
+      "brier_score": 0.2445,
+      "log_loss": 0.692,
+      "mae": 0.4484,
+      "n_samples": 50
+    }
+  ],
+  "conclusion": "Найнижчий Brier Score має модель «market» (0.2356). Breeden-Litzenberger дає ризик-нейтральну оцінку P(YES); ML-hybrid підсилює її при високому anomaly score."
+}
